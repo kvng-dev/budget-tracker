@@ -33,7 +33,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { CircleOff, Loader2, PlusSquare } from "lucide-react";
-import { useCallback, useState } from "react";
+import { ReactNode, useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
@@ -46,9 +46,10 @@ import { useTheme } from "next-themes";
 interface Props {
   type: TransactionType;
   onSuccessCb: (category: Category) => void;
+  trigger?: ReactNode;
 }
 
-const CreateCategoryDialog = ({ type, onSuccessCb }: Props) => {
+const CreateCategoryDialog = ({ type, onSuccessCb, trigger }: Props) => {
   const [open, setOpen] = useState(false);
 
   const form = useForm<CreateCategorySchemaType>({
@@ -98,13 +99,17 @@ const CreateCategoryDialog = ({ type, onSuccessCb }: Props) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button
-          variant="ghost"
-          className="flex border-separate items-center justify-start rounded-none border-b px-3 py-3 text-muted-foreground"
-        >
-          <PlusSquare className="mr-2 h-4 w-4 " />
-          Create new
-        </Button>
+        {trigger ? (
+          trigger
+        ) : (
+          <Button
+            variant="ghost"
+            className="flex border-separate items-center justify-start rounded-none border-b px-3 py-3 text-muted-foreground"
+          >
+            <PlusSquare className="mr-2 h-4 w-4 " />
+            Create new
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent className="dark:bg-black w-full">
         <DialogHeader>
@@ -133,7 +138,7 @@ const CreateCategoryDialog = ({ type, onSuccessCb }: Props) => {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Category" {...field} />
+                    <Input type="text" placeholder="Category" {...field} />
                   </FormControl>
                   <FormDescription>
                     This is how the category will appear

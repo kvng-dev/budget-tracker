@@ -26,11 +26,11 @@ const CategoriesStats = ({ userSettings, from, to }: Props) => {
       ).then((res) => res.json()),
   });
 
-  console.log(statsQuery.data);
-
   const formatter = useMemo(() => {
     return GetFormatterForCurrency(userSettings.currency);
   }, [userSettings.currency]);
+
+  
 
   return (
     <div className="flex w-full flex-wrap gap-2 md:flex-nowrap">
@@ -63,7 +63,9 @@ function CategoriesCard({
   formatter: Intl.NumberFormat;
   data: getCategoriesStatsResponseType;
 }) {
-  const filteredData = data.filter((el) => el.type === type);
+  const filteredData = Array.isArray(data)
+    ? data.filter((el) => el.type === type)
+    : [];
   const total = filteredData.reduce(
     (acc, el) => acc + (el._sum?.amount || 0),
     0
@@ -112,7 +114,7 @@ function CategoriesCard({
                     <Progress
                       value={percentage}
                       indicator={
-                        type === "income" ? "bg-emrald-500" : "bg-red-500"
+                        type === "income" ? "bg-emerald-500" : "bg-red-500"
                       }
                     />
                   </div>

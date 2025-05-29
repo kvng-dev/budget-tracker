@@ -33,6 +33,7 @@ const CategoryPicker = ({ type, onChange }: Props) => {
     if (!value) return;
     onChange(value);
   }, [onChange, value]);
+
   const categoryQuery = useQuery({
     queryKey: ["categories", type],
     queryFn: () =>

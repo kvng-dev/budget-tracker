@@ -15,12 +15,10 @@ interface Props {
 
 const StatsCards = ({ userSettings, from, to }: Props) => {
   const statsQuery = useQuery<GetBalanceResponseType>({
-    queryKey: ["overview", "stats", "categories", from, to],
+    queryKey: ["overview", "stats", from, to],
     queryFn: () =>
       fetch(
-        `/api/stats/categories?from=${DateToUTCDate(from)}&to=${DateToUTCDate(
-          to
-        )}`
+        `/api/stats/balance?from=${DateToUTCDate(from)}&to=${DateToUTCDate(to)}`
       ).then((res) => res.json()),
   });
 
@@ -33,8 +31,10 @@ const StatsCards = ({ userSettings, from, to }: Props) => {
 
   const balance = income - expense;
 
+  console.log("Balance", balance);
+
   return (
-    <div className="relative grid sm:grid-cols-3 grid-cols-1 w-full px-8 md:px-0 gap-2 md:flex-nowrap">
+    <div className="relative grid sm:grid-cols-3 grid-cols-1 w-full gap-2 md:flex-nowrap">
       <SkeletonWrapper isLoading={statsQuery.isFetching}>
         <StatCard
           formatter={formatter}

@@ -4,6 +4,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import RootProvider from "@/components/providers/root-provider";
 import { Toaster } from "sonner";
+import Navbar from "@/components/navbar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,7 +31,12 @@ export default function RootLayout({
         }}
       >
         <body className={`${inter.className}`}>
-          <RootProvider>{children}</RootProvider>
+          <RootProvider>
+            <div className="relative flex h-screen w-full flex-col">
+              <Navbar />
+              {children}
+            </div>
+          </RootProvider>
           <Toaster richColors />
         </body>
       </html>
