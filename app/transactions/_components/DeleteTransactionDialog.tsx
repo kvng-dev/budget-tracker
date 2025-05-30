@@ -44,7 +44,7 @@ const DeleteTransactionDialog = ({ open, setOpen, transactionId }: Props) => {
           <AlertDialogTitle>Are you sure?</AlertDialogTitle>
           <AlertDialogDescription>
             This action cannot be undone. This will permanently delete your
-            category
+            transaction
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
